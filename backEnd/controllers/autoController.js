@@ -1,10 +1,9 @@
 const asyncHandler = require('express-async-handler')
 
-const Auto = require('../models/autosModel')
+const Auto = require('../models/autoModel')
 
 const getAutos = asyncHandler(async (req, res) => {
-    const autos = await Auto.find()
-
+    const autos = await Auto.find({ user: req.user.id })
     res.status(200).json(autos)
 })
 
@@ -18,7 +17,8 @@ const setAuto = asyncHandler(async (req, res) => {
         Marca: req.body.Marca,
         Modelo: req.body.Modelo,
         Año: req.body.Año,
-        Color: req.body.Color
+        Color: req.body.Color,
+        user:req.user._id
     })
     res.status(201).json(autos)
 })
